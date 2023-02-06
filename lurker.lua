@@ -9,7 +9,8 @@
 
 -- Assumes lume is in the same directory as this file if it does not exist
 -- as a global
-local lume = rawget(_G, "lume") or require((...):gsub("[^/.\\]+$", "lume.lume"))
+local PATH = (...)
+local lume = rawget(_G, "lume") or require(PATH:gsub("[^/.\\]+$", "lume.lume"))
 
 local lurker = { _version = "1.0.1" }
 
@@ -58,6 +59,10 @@ function lurker.init()
   return lurker
 end
 
+function lurker.useShaderReload()
+  require(PATH:gsub("[^/.\\]+$", "requireShader"))
+  lurker.doShaders = true
+end
 
 function lurker.print(...)
   print("[lurker] " .. lume.format(...))
@@ -206,16 +211,23 @@ function lurker.update()
   end
 end
 
+local function fNameMatch(f)
+  if f:match("%.lua$") then return true end
+  if f:match("%.glsl$") then
+    return lurker.state == "init" or lurker.doShaders
+  end
+end
 
 function lurker.getchanged()
   local function fn(f)
-    return f:match("%.lua$") and lurker.files[f] ~= lastmodified(f)
+    return fNameMatch(f) and lurker.files[f] ~= lastmodified(f)
   end
   return lume.filter(lurker.listdir(lurker.path, true, true), fn)
 end
 
 
 function lurker.modname(f)
+  if lurker.doShaders and f:match(".glsl$") then return f end
   return (f:gsub("%.lua$", ""):gsub("[/\\]", "."))
 end
 
