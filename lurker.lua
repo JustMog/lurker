@@ -59,9 +59,11 @@ function lurker.init()
   return lurker
 end
 
-function lurker.useShaderReload()
-  require(PATH:gsub("[^/.\\]+$", "requireShader"))
-  lurker.doShaders = true
+function lurker.useShaderReload(enable)
+  if enable then
+    require(PATH:gsub("[^/.\\]+$", "requireShader"))
+  end
+  lurker.doShaders = enable
 end
 
 function lurker.print(...)
