@@ -9,7 +9,7 @@
 
 -- Assumes lume is in the same directory as this file if it does not exist
 -- as a global
-local lume = rawget(_G, "lume") or require((...):gsub("[^/.\\]+$", "lume"))
+local lume = rawget(_G, "lume") or require((...):gsub("[^/.\\]+$", "lume.lume"))
 
 local lurker = { _version = "1.0.1" }
 

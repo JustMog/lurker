@@ -2,3 +2,5 @@ lume.lua
 __*
 *.tmp
 *.swp
+.vscode
+main.lua
