@@ -46,6 +46,29 @@ hotswap occurs and is passed the name of the file which was swapped.
 lurker.postswap = function(f) print("File " .. f .. " was swapped") end
 ```
 
+### lurker.useShaderReload(enable)
+Pass true to enable hot reloading shaders from .glsl files.
+Once enabled, use require to load shaders in the form of a thin wrapper hotswappable by lurker.
+These also provide a couple of new functions.
+```lua
+lurker.useShaderReload(true)
+-- must use slashes as separators (same as love.graphics.newShader)
+local shader = require "shaders/someShader.glsl"
+
+function love.draw()
+    love.graphics.setShader(shader) -- works
+    shader:set() -- alternatively
+
+    shader:send("someUniform", 42)  -- works
+    -- alternatively, does nothing if no such uniform
+    shader:trySend("someUniform", 42)
+
+    --draw stuff
+
+    love.graphics.setShader()
+end
+```
+
 ### lurker.protected
 Dictates whether lurker should run in protected mode; this is `true` by
 default. If protected mode is disabled then LÖVE's usual error screen is used
