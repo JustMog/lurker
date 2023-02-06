@@ -5,10 +5,11 @@ A small module which automatically hotswaps changed Lua files in a running
 
 
 ## Installation
-
-Drop the [lurker.lua](lurker.lua?raw=1) and
-[lume.lua](https://raw.github.com/rxi/lume/master/lume.lua) files into an
-existing project and add the following line inside the `love.update()`
+```
+git clone --recursive https://github.com/JustMog/lurker
+```
+into an existing project (or drop the [lurker.lua](lurker.lua?raw=1) and
+[lume.lua](https://raw.github.com/rxi/lume/master/lume.lua) files) and add the following line inside the `love.update()`
 function:
 ```lua
 require("lurker").update()
